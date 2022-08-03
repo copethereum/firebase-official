@@ -1,6 +1,6 @@
-package links.core.web;
+package etherscan.core.web;
 
-import links.core.EtherscanTestBase;
+import etherscan.core.EtherscanTestBase;
 
 
 public class EtherscanWebTestBase extends EtherscanTestBase {

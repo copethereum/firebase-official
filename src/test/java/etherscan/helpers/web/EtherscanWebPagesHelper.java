@@ -1,8 +1,8 @@
-package links.helpers.web;
+package etherscan.helpers.web;
 
-import links.core.web.EtherscanWebManager;
-import links.pages.EtherscanWebPage_Home;
-import links.pages.EtherscanWebPage_Register;
+import etherscan.core.web.EtherscanWebManager;
+import etherscan.pages.EtherscanWebPage_Home;
+import etherscan.pages.EtherscanWebPage_Register;
 
 
 public class EtherscanWebPagesHelper {

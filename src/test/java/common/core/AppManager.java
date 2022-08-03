@@ -2,8 +2,8 @@ package common.core;
 
 import org.openqa.selenium.WebDriver;
 
-import links.core.EtherscanManager;
-import links.core.web.EtherscanWebManager;
+import etherscan.core.EtherscanManager;
+import etherscan.core.web.EtherscanWebManager;
 
 public class AppManager {
 

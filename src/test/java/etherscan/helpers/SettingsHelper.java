@@ -1,8 +1,8 @@
-package links.helpers;
+package etherscan.helpers;
 
 import common.core.MTFProperties;
 import common.core.TestBase;
-import links.core.web.EtherscanWebManager;
+import etherscan.core.web.EtherscanWebManager;
 
 
 public class SettingsHelper extends TestBase {

@@ -1,11 +1,11 @@
-package links.pages;
+package etherscan.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import links.pages.EtherscanWebPage_Home;
-import links.core.web.EtherscanWebManager;
+import etherscan.core.web.EtherscanWebManager;
+import etherscan.pages.EtherscanWebPage_Home;
 
 public class EtherscanWebPage_Home extends EtherscanWebPage_Base {
 	

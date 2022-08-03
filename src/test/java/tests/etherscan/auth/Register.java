@@ -1,8 +1,8 @@
-package tests.links.auth;
+package tests.etherscan.auth;
 
 import org.testng.annotations.Test;
 
-import links.core.web.EtherscanWebTestBase;
+import etherscan.core.web.EtherscanWebTestBase;
 
 public class Register extends EtherscanWebTestBase {
 

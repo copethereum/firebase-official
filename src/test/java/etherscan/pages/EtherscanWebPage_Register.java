@@ -1,4 +1,4 @@
-package links.pages;
+package etherscan.pages;
 
 import static org.testng.Assert.assertEquals;
 
@@ -8,9 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
 import common.core.functions.CoreFunctions;
+import etherscan.core.web.EtherscanWebManager;
+import etherscan.pages.EtherscanWebPage_Register;
 import common.core.MTFExpectedConditions;
-import links.core.web.EtherscanWebManager;
-import links.pages.EtherscanWebPage_Register;
 
 
 public class EtherscanWebPage_Register extends EtherscanWebPage_Base {

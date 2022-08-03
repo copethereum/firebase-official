@@ -1,10 +1,10 @@
-package links.core.web;
+package etherscan.core.web;
 
-import links.helpers.SettingsHelper;
 import common.core.AppManager;
-import links.core.EtherscanManager;
-import links.core.web.EtherscanWebManager;
-import links.helpers.web.EtherscanWebPagesHelper;
+import etherscan.core.EtherscanManager;
+import etherscan.core.web.EtherscanWebManager;
+import etherscan.helpers.SettingsHelper;
+import etherscan.helpers.web.EtherscanWebPagesHelper;
 
 public class EtherscanWebManager extends EtherscanManager {
 

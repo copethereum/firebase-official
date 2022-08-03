@@ -1,11 +1,11 @@
-package links.pages;
+package etherscan.pages;
 
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import common.core.WebPageBase;
-import links.core.web.EtherscanWebManager;
+import etherscan.core.web.EtherscanWebManager;
 
 public class EtherscanWebPage_Base extends WebPageBase {
 

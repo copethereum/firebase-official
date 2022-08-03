@@ -1,4 +1,4 @@
-package links.core;
+package etherscan.core;
 
 import org.openqa.selenium.WebDriver;
 

@@ -37,10 +37,10 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import common.core.TestBase;
+import etherscan.core.web.EtherscanWebManager;
+import etherscan.core.web.EtherscanWebTestBase;
 import common.core.AppManager;
 import common.core.MTFProperties;
-import links.core.web.EtherscanWebManager;
-import links.core.web.EtherscanWebTestBase;
 
 import static common.core.Constants.ENV_LOCAL;
 import static common.core.Constants.CHROME_BROWSER;
