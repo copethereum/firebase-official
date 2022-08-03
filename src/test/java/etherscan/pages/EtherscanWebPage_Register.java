@@ -53,7 +53,7 @@ public class EtherscanWebPage_Register extends EtherscanWebPage_Base {
 	@FindBy(xpath = "//a[@class = 'header-small-menu user-register']")
 	private WebElement btn_register_page;
 	
-	@FindBy(xpath = "//input[@id = 'ContentPlaceHolder1_MyCheckBox']")
+	@FindBy(xpath = "//span[contains(text(), 'I agree to the ')]")
 	private WebElement cbox_agree_to_terms;
 	
 	@FindBy(name = "ctl00$ContentPlaceHolder1$txtUserName")
