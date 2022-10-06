@@ -16,7 +16,7 @@ public class WebPageBase {
     public WebPageBase(AppManager app) throws Exception {
         this.driver = app.getDriver();
         this.wait = new WebDriverWait(this.driver,
-                MTFTimeouts.getTimeout(MTFTimeouts.DRIVER_WAIT_DEFAULT, TimeUnit.SECONDS));
+                TestTimeouts.getTimeout(TestTimeouts.DRIVER_WAIT_DEFAULT, TimeUnit.SECONDS));
 
         this.extendedDriver = new ExtendedWebDriver(this.driver, this.wait);
         this.app = app;

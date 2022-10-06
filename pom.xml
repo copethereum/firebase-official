@@ -2,13 +2,13 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.etherscan</groupId>
-    <artifactId>etherscan-official</artifactId>
+    <groupId>com.firebase</groupId>
+    <artifactId>firebase-official</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>etherscan-selenium</name>
-    <description>Selenium feature tests for ETHERSCAN product using TestNG</description>
+    <name>firebase-selenium</name>
+    <description>Selenium feature tests for FIREBASE product using TestNG</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -2,14 +2,14 @@ package common.core;
 
 import org.openqa.selenium.WebDriver;
 
-import etherscan.core.EtherscanManager;
-import etherscan.core.web.EtherscanWebManager;
+import firebase.core.FireBaseManager;
+import firebase.core.web.FireBaseWebManager;
 
 public class AppManager {
 
     private WebDriver driver;
-    private EtherscanManager etherscanManager;
-    private EtherscanWebManager etherscanWebManager;
+    private FireBaseManager fireBaseManager;
+    private FireBaseWebManager fireBaseWebManager;
 
     public void setDriver(WebDriver driver) {
         this.driver = driver;
@@ -19,20 +19,20 @@ public class AppManager {
         return driver;
     }
 
-    public EtherscanManager getEtherscanManager() {
-        if(etherscanManager == null) {
-        	etherscanManager = new EtherscanManager(this);
+    public FireBaseManager getFireBaseManager() {
+        if(fireBaseManager == null) {
+        	fireBaseManager = new FireBaseManager(this);
         }
 
-        return etherscanManager;
+        return fireBaseManager;
     }
 
-    public EtherscanWebManager getEtherscanWebManager() {
-        if(etherscanWebManager == null) {
-        	etherscanWebManager = new EtherscanWebManager(this);
+    public FireBaseWebManager getFireBaseWebManager() {
+        if(fireBaseWebManager == null) {
+        	fireBaseWebManager = new FireBaseWebManager(this);
         }
 
-        return etherscanWebManager;
+        return fireBaseWebManager;
     }
 
 }

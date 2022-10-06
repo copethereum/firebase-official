@@ -3,7 +3,7 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="links-official">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="firebase-official">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
@@ -19,7 +19,7 @@
         <pathelement location="../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.yaml.snakeyaml_1.27.0.v20201111-1638.jar"/>
         <pathelement location="../../../../Applications/Eclipse.app/Contents/Eclipse/plugins/org.webjars.jquery_3.5.1.jar"/>
     </path>
-    <path id="links-official.classpath">
+    <path id="firebase-official.classpath">
         <pathelement location="target/classes"/>
         <pathelement location="target/test-classes"/>
         <path refid="Maven Dependencies.libraryclasspath"/>
@@ -48,7 +48,7 @@
         <pathelement location="../../Downloads/commons-io-2.11.0/commons-io-2.11.0.jar"/>
     </path>
     <path id="run.TestBase.classpath">
-        <path refid="links-official.classpath"/>
+        <path refid="firebase-official.classpath"/>
         <path refid="Maven Dependencies.libraryclasspath"/>
         <pathelement location="lib/byte-buddy-1.8.3.jar"/>
         <pathelement location="lib/client-combined-3.13.0.jar"/>
@@ -98,11 +98,11 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="target/classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src/main/java"/>
-            <classpath refid="links-official.classpath"/>
+            <classpath refid="firebase-official.classpath"/>
         </javac>
         <javac debug="true" debuglevel="${debuglevel}" destdir="target/test-classes" includeantruntime="false" source="${source}" target="${target}">
             <src path="src/test/java"/>
-            <classpath refid="links-official.classpath"/>
+            <classpath refid="firebase-official.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>

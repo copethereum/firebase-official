@@ -15,32 +15,20 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
-import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import common.core.TestBase;
-import etherscan.core.web.EtherscanWebManager;
-import etherscan.core.web.EtherscanWebTestBase;
-import common.core.AppManager;
-import common.core.MTFProperties;
+import firebase.core.web.FireBaseWebManager;
+import firebase.core.web.FireBaseWebTestBase;
 
 import static common.core.Constants.ENV_LOCAL;
 import static common.core.Constants.CHROME_BROWSER;
@@ -49,32 +37,18 @@ import static common.core.Constants.FIREFOX_BROWSER;
 import static common.core.Constants.IE_BROWSER;
 import static common.core.Constants.OPERA_BROWSER;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
 import org.openqa.selenium.WebDriver;
 
 @Listeners({
@@ -83,16 +57,18 @@ import org.openqa.selenium.WebDriver;
 
 public class TestBase {
 
-    public static EtherscanWebManager etherscan = new EtherscanWebManager(TestBase.appManager);
+    public static FireBaseWebManager etherscan = new FireBaseWebManager(TestBase.appManager);
 
     public static WebDriver driver;
     public static AppManager appManager;
 
     // Extent report variables
-    private static ExtentHtmlReporter htmlReporter;
-    private static ExtentReports report;
     static ExtentTest logger;
     String date;
+
+    // Jsoup variables
+    protected Response res = null;
+    protected int retryCount = 0;
 
     // flag for skipped tests
     protected boolean isSkip = false;
@@ -115,7 +91,7 @@ public class TestBase {
         System.out.println("=========================================================");
         System.out.println("=== INIT PROPERTIES");
         System.out.println("=========================================================");
-        MTFProperties.init();
+        TestProperties.init();
     }
 
     @BeforeClass
@@ -134,18 +110,18 @@ public class TestBase {
         System.out.println("=== " + seconds + "seconds");
         System.out.println("=========================================================");
 
-        EtherscanWebTestBase webTestBase = new EtherscanWebTestBase();
+        FireBaseWebTestBase webTestBase = new FireBaseWebTestBase();
         System.out.println("=========================================================");
         System.out.println("=== Wait for web application to load");
-        webTestBase.etherscan().settings().setEtherscanTestServer();
+        webTestBase.firebase().settings().setTestServer();
         System.out.println("=== Done!");
         System.out.println("=========================================================");
     }
 
     public WebDriver initWebDriver(ITestContext testContext) throws Exception {
         WebDriver driver = null;
-        String browser = MTFProperties.getBrowser();
-        if(MTFProperties.getEnvironment().equals(ENV_LOCAL)) {
+        String browser = TestProperties.getBrowser();
+        if(TestProperties.getEnvironment().equals(ENV_LOCAL)) {
             System.out.println("=== WEBDRIVER: local initialization started...");
             driver = initDriver(browser);
             System.out.println("=== WEBDRIVER: local initialization finished");
@@ -190,7 +166,7 @@ public class TestBase {
                 profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf, application/octet-stream");
                 profile.setPreference("pdfjs.disabled", true);
 
-                if(MTFProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
+                if(TestProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
                     // Firefox options for headless Firefox browser
                     firefoxOptions.addArguments("--headless");
                     firefoxOptions.addArguments("--width=1920");
@@ -213,7 +189,7 @@ public class TestBase {
                 String exePath = path + "\\chromedriver.exe";
                 System.setProperty("webdriver.chrome.driver", exePath);
 
-                if(MTFProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
+                if(TestProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
                     // Chrome options for headless Chrome browser
                     chromeOptions.addArguments("--headless");
                     chromeOptions.addArguments("--allow-running-insecure-content");
@@ -299,7 +275,7 @@ public class TestBase {
                 newDriver = new OperaDriver();
             }
         }
-        if(MTFProperties.getBrowser().equals(Constants.FIREFOX_BROWSER) && MTFProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
+        if(TestProperties.getBrowser().equals(Constants.FIREFOX_BROWSER) && TestProperties.getEnvironment().equals(Constants.ENV_CLOUD)) {
             System.out.println("Skip window maximizing!");
         } else {
             newDriver.manage().window().maximize();
@@ -328,6 +304,17 @@ public class TestBase {
         if(file.exists() && !file.canExecute()) {
             file.setExecutable(true);
         }
+    }
+
+    protected org.jsoup.Connection jsoupConnection(String url, Method method) {
+        org.jsoup.Connection conn = Jsoup.connect(url).timeout(TestProperties.getTimeout()).method(method)
+                .ignoreContentType(true).validateTLSCertificates(false)
+                .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
+        if(res != null) {
+            conn = conn.cookies(res.cookies());
+        }
+
+        return conn;
     }
 
     public static void writeReportLog(String log) {
