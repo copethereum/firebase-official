@@ -32,7 +32,7 @@ Test cases for API Coindesk BTC Price Fluctuation on  https://api.coindesk.com/v
 5. Array of response time
 6. The sum of all BTC values
 7. Average price of BTC in USD
-8. Median Value is: 20141.797
+8. Median Value
 
 **Test class is in tests.api.coindesk package**
 
